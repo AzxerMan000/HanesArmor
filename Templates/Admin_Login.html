@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Admin Login - HanesArmor{% endblock %}
+{% block content %}
+  <h2>Admin Login</h2>
+  <form method="POST">
+    <label>Admin Password</label>
+    <input type="password" name="admin_pass" required />
+    <button type="submit">Login</button>
+  </form>
+{% endblock %}
