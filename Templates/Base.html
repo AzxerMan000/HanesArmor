@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{% block title %}HanesArmor{% endblock %}</title>
+  <style>
+    :root {
+      --bg-color: #fff;
+      --text-color: #222;
+      --link-color: #0066cc;
+      --btn-bg: #0066cc;
+      --btn-text: #fff;
+      --input-bg: #f0f0f0;
+      --input-text: #222;
+      --border-color: #ccc;
+    }
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --link-color: #3399ff;
+      --btn-bg: #3399ff;
+      --btn-text: #121212;
+      --input-bg: #333;
+      --input-text: #e0e0e0;
+      --border-color: #555;
+    }
+    body {
+      background: var(--bg-color);
+      color: var(--text-color);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0; padding: 20px;
+      transition: background 0.3s, color 0.3s;
+    }
+    a {
+      color: var(--link-color);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    button {
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 1rem;
+      transition: background 0.3s;
+    }
+    button:hover {
+      filter: brightness(0.9);
+    }
+    input, select, textarea {
+      background: var(--input-bg);
+      color: var(--input-text);
+      border: 1px solid var(--border-color);
+      padding: 8px;
+      font-size: 1rem;
+      border-radius: 5px;
+      width: 100%;
+      box-sizing: border-box;
+      margin: 5px 0 15px;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    pre {
+      background: var(--input-bg);
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      font-family: "Consolas", monospace;
+      font-size: 0.9rem;
+    }
+    .container {
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .flash-messages {
+      margin-bottom: 15px;
+      color: #f44336;
+      font-weight: 700;
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--btn-bg);
+      color: var(--btn-text);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      line-height: 40px;
+      text-align: center;
+      cursor: pointer;
+      user-select: none;
+      box-shadow: 0 0 8px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">🌙</div>
+  
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flash-messages">
+          {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('themeToggle');
+    const currentTheme = localStorage.getItem('hanesarmor-theme') || 'light';
+
+    if (currentTheme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      toggleBtn.textContent = '☀️';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      let theme = document.documentElement.getAttribute('data-theme');
+      if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('hanesarmor-theme', 'light');
+        toggleBtn.textContent = '🌙';
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('hanesarmor-theme', 'dark');
+        toggleBtn.textContent = '☀️';
+      }
+    });
+  </script>
+</body>
+</html>
