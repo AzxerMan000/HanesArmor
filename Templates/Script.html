@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Protected Script - HanesArmor{% endblock %}
+{% block content %}
+  <h2>Protected Script</h2>
+  <pre>{{ script }}</pre>
+  <p><a href="{{ url_for('home') }}">Back Home</a></p>
+{% endblock %}
